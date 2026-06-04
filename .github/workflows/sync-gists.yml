@@ -1,0 +1,24 @@
+name: Sync guides to Gist
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "Linux/**"
+      - "README.md"
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Sync MT7927 Wi-Fi/BT guide
+        env:
+          GH_TOKEN: ${{ secrets.GIST_PAT }}
+        run: gh gist edit ${{ vars.GIST_ID_MT7927 }} Linux/fix_wifi-bt_asus-mt7927.md
+
+      - name: Sync Bluetooth audio profile guide
+        env:
+          GH_TOKEN: ${{ secrets.GIST_PAT }}
+        run: gh gist edit ${{ vars.GIST_ID_BT_AUDIO }} Linux/fix_bt-audio-profile.md
